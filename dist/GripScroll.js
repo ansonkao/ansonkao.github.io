@@ -64,15 +64,17 @@ var CurseWords = function() {
 }();
 
 GripScroll = function() {
-    function Scrollbar(container, direction) {
+    function Scrollbar(container, params) {
         this.canvas = container.appendChild(document.createElement("canvas")), this.canvasContext = this.canvas.getContext("2d"), 
-        this.canvas.className = "bar " + direction, this.direction = direction, this.perpendicular = {
+        this.canvas.className = "bar " + params.direction, this.direction = params.direction, 
+        this.perpendicular = {
             x: "y",
             y: "x"
-        }[direction], this.smallestZoom = .125, this.isHovering = !1, this.isDragging = !1, 
-        this.wasHovering = null, this.wasDragging = null, this.model = {
-            min: 0,
-            max: 1
+        }[this.direction], this.smallestZoom = .125, this.isHovering = !1, this.isDragging = !1, 
+        this.wasHovering = null, this.wasDragging = null, this.width = null, this.height = null, 
+        this.model = {
+            min: params.min || 0,
+            max: params.max || 1
         }, this.oldDrawModel = {
             min: null,
             max: null
@@ -86,8 +88,8 @@ GripScroll = function() {
                 this.canvas.width = this.width = 10, this.canvas.height = this.height = container.clientHeight - 20;
             }
             this.wasHovering = null, this.wasDragging = null, this.oldDrawModel.min = null, 
-            this.oldDrawModel.max = null, this.draw(this.model.min, this.model.max);
-        }, this.draw = function(newMin, newMax) {
+            this.oldDrawModel.max = null, this.render(this.model.min, this.model.max);
+        }, this.render = function(newMin, newMax) {
             if (newMin || 0 === newMin ? newMax || (newMax = newMin.max, newMin = newMin.min) : (newMin = this.model.min, 
             newMax = this.model.max), newMin != this.oldDrawModel.min || this.wasHovering != this.isHovering || newMax != this.oldDrawModel.max || this.wasDragging != this.isDragging) {
                 switch (this.canvasContext.clear(), this.isHovering || this.isDragging ? this.canvas.classList.add("is-mouseover") : this.canvas.classList.remove("is-mouseover"), 
@@ -136,10 +138,10 @@ GripScroll = function() {
             return newModel.min = changePosition + this.model.min, newModel.max = changePosition + this.model.max, 
             newModel;
         }, this.recalculateModel = function(e, whichGrip, startPosition) {
-            if (whichGrip && this.isOutsideDragZone(e)) return this.draw(this.model), null;
+            if (whichGrip && this.isOutsideDragZone(e)) return this.render(this.model), null;
             if ("mid" == whichGrip) {
                 var newPosition = this.calculateCursorPosition(e), newModel = this.validateBothEndPositions(newPosition - startPosition);
-                return this.draw(newModel), newModel;
+                return this.render(newModel), newModel;
             }
             if ("min" == whichGrip || "max" == whichGrip) {
                 var newPosition = this.calculateCursorPosition(e);
@@ -149,7 +151,7 @@ GripScroll = function() {
                     max: "min"
                 }[whichGrip], newModel = {};
                 return newModel[whichGrip] = newPosition, newModel[otherGrip] = this.model[otherGrip], 
-                this.draw(newModel), newModel;
+                this.render(newModel), newModel;
             }
             return null;
         }, this.pxToPct = function() {
@@ -176,7 +178,7 @@ GripScroll = function() {
             var newModel = that.recalculateModel(e, whichGrip, startPosition);
             newModel && (that.save(newModel.min, "min"), that.save(newModel.max, "max"));
         }), CurseWords.addImplicitCursorHandler(that.canvas, function() {
-            that.isHovering = !0, that.draw();
+            that.isHovering = !0, that.render();
         }, function(e) {
             var newPosition = that.calculateCursorPosition(e), hoverGrip = that.whichGrip(newPosition), newCursor = null;
             switch (hoverGrip) {
@@ -195,16 +197,25 @@ GripScroll = function() {
               default:
                 that.isHovering = !1, newCursor = "default";
             }
-            return that.draw(), newCursor;
+            return that.render(), newCursor;
         }, function() {
-            that.isHovering = !1, that.draw();
+            that.isHovering = !1, that.render();
         });
     }
-    var containerStack = [], scrollbarStack = [], add = function(container) {
+    var containerStack = [], scrollbarStack = [], add = function(container, params) {
+        params = params || {};
         for (var i = 0; i < containerStack.length; i++) if (containerStack[i] == container) return;
         containerStack.push(container), scrollbarStack.push({
-            x: new Scrollbar(container, "x"),
-            y: new Scrollbar(container, "y")
+            x: new Scrollbar(container, {
+                direction: "x",
+                min: params.x1 || 0,
+                max: params.x2 || 1
+            }),
+            y: new Scrollbar(container, {
+                direction: "y",
+                min: params.y1 || 0,
+                max: params.y2 || 1
+            })
         });
     };
     return {

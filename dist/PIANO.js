@@ -507,8 +507,7 @@ var PIANO = function() {
         }, this.keyScale = {
             min: 0,
             max: 1
-        }, this.notes = {}, this.notes.saved = b.notes || [], this.notes.active = [], this.isDragging = !1, 
-        this.isHovering = !1;
+        }, this.notes = b.notes || [], this.isDragging = !1, this.isHovering = !1;
         var c = this;
         c.init(), window.addEventListener("resize", function() {
             c.init();
@@ -516,10 +515,11 @@ var PIANO = function() {
             c.timeScale.min = a.gripScrollX.min, c.timeScale.max = a.gripScrollX.max, c.keyScale.min = a.gripScrollY.min, 
             c.keyScale.max = a.gripScrollY.max, c.renderFreshGrid(), c.renderNotes();
         });
-        var d = null, e = function(a) {
+        var d = null, e = null, f = function(a) {
             d = a;
-            var b = c.xCoordToBar(a.clientX - c.canvas.clientXYDirectional("x")), e = c.yCoordToKey(a.clientY - c.canvas.clientXYDirectional("y")), f = c.getHoveredNote(b, e);
-            switch (c.isDragging = c.getHoverAction(b, f), c.setActiveNotes(f, key.shift), c.isDragging) {
+            var b = c.xCoordToBar(a.clientX - c.canvas.clientXYDirectional("x")), f = c.yCoordToKey(a.clientY - c.canvas.clientXYDirectional("y"));
+            switch (e = c.getHoveredNote(b, f), c.isDragging = c.getHoverAction(b, e), (0 == c.countActiveNotes() && "select" != c.isDragging || e && !e.active || "select" == c.isDragging && 0 == key.shift) && c.setActiveNotes(e, key.shift), 
+            c.isDragging) {
               case "mid":
                 CurseWords.setExplicitCursor("grabbing");
                 break;
@@ -527,10 +527,13 @@ var PIANO = function() {
               case "min":
               case "max":
                 CurseWords.setExplicitCursor("xresize");
-            }
-        }, f = function(a) {
+                break;
+
+              case "select":            }
+            c.renderFreshGrid(), c.renderNotes();
+        }, g = function(a) {
             c.renderFreshGrid();
-            var b = {}, e = !1;
+            var b = {}, f = !1;
             switch (c.isDragging) {
               case "mid":
                 b.keyDelta = c.pixelsToKey(a.clientY - d.clientY), b.startDelta = c.pixelsToBar(a.clientX - d.clientX), 
@@ -545,11 +548,12 @@ var PIANO = function() {
                 b.endDelta = c.pixelsToBar(a.clientX - d.clientX);
                 break;
 
+              case "select":
               default:
-                e = !0;
+                f = !0, c.selectNotesInBoundingBox(d, a);
             }
-            c.renderNotes(b), e && c.renderSelectionBox(d, a);
-        }, g = function(a) {
+            b = c.snapNoteChanges(b, e), c.renderNotes(b), f && c.renderSelectionBox(d, a);
+        }, h = function(a) {
             var b = {};
             switch (c.isDragging) {
               case "mid":
@@ -563,14 +567,19 @@ var PIANO = function() {
 
               case "max":
                 b.endDelta = c.pixelsToBar(a.clientX - d.clientX);
+                break;
+
+              case "select":
+              default:
+                c.activateSelectedNotes();
             }
-            c.isDragging = !1, c.applyChangesToActiveNotes(b), c.renderFreshGrid(), c.renderNotes(), 
-            CurseWords.clearExplicitCursor();
+            c.isDragging = !1, b = c.snapNoteChanges(b, e), c.applyChangesToActiveNotes(b), 
+            c.renderFreshGrid(), c.renderNotes(), CurseWords.clearExplicitCursor();
         };
-        DragKing.addHandler(c.canvas, e, f, g);
-        var h = function() {
+        DragKing.addHandler(c.canvas, f, g, h);
+        var i = function() {
             c.isHovering = !0;
-        }, i = function(a) {
+        }, j = function(a) {
             if (c.isDragging) return null;
             var b = c.xCoordToBar(a.clientX - c.canvas.clientXYDirectional("x")), d = c.yCoordToKey(a.clientY - c.canvas.clientXYDirectional("y")), e = c.getHoveredNote(b, d), f = c.getHoverAction(b, e);
             c.renderFreshGrid(), c.renderNotes();
@@ -592,31 +601,56 @@ var PIANO = function() {
                 g = "default";
             }
             return g;
-        }, j = function() {
+        }, k = function() {
             c.renderFreshGrid(), c.renderNotes();
         };
-        CurseWords.addImplicitCursorHandler(c.canvas, h, i, j), a.addEventListener("dblclick", function(a) {
+        CurseWords.addImplicitCursorHandler(c.canvas, i, j, k), a.addEventListener("dblclick", function(a) {
             var b = c.xCoordToBar(a.clientX - c.canvas.clientXYDirectional("x")), d = c.yCoordToKey(a.clientY - c.canvas.clientXYDirectional("y")), e = c.getHoveredNote(b, d);
-            if (e) {
-                var f = c.notes.active.indexOf(e);
-                f > -1 && c.notes.active.splice(f, 1);
-            } else {
-                var g = {};
-                g.key = Math.ceil(d), g.start = .25 * Math.floor(4 * b), g.end = .25 * Math.ceil(4 * b), 
-                c.setActiveNotes(g);
+            if (e) c.notes.splice(c.notes.indexOf(e), 1); else {
+                var f = {};
+                f.key = Math.ceil(d), f.start = .25 * Math.floor(4 * b), f.end = .25 * Math.ceil(4 * b), 
+                c.setActiveNotes(f);
             }
             c.renderFreshGrid(), c.renderNotes();
+        }), key("del", function() {
+            return c.deleteActiveKeys(), c.renderFreshGrid(), c.renderNotes(), !1;
+        }), key("up", function() {
+            var a = {
+                keyDelta: 1
+            };
+            return c.applyChangesToActiveNotes(a), c.renderFreshGrid(), c.renderNotes(), !1;
+        }), key("down", function() {
+            var a = {
+                keyDelta: -1
+            };
+            return c.applyChangesToActiveNotes(a), c.renderFreshGrid(), c.renderNotes(), !1;
+        }), key("left", function() {
+            var a = {
+                startDelta: -.25,
+                endDelta: -.25
+            };
+            return c.applyChangesToActiveNotes(a), c.renderFreshGrid(), c.renderNotes(), !1;
+        }), key("right", function() {
+            var a = {
+                startDelta: .25,
+                endDelta: .25
+            };
+            return c.applyChangesToActiveNotes(a), c.renderFreshGrid(), c.renderNotes(), !1;
         });
     }
     var b = [], c = [], d = function(d, e) {
         for (var f = 0; f < b.length; f++) if (b[f] == d) return;
         b.push(d), c.push(new a(d, e));
     }, e = function(a) {
-        for (var d = 0; d < b.length; d++) if (b[d] == a) return c[d].notes.saved;
+        for (var d = 0; d < b.length; d++) if (b[d] == a) return c[d].notes;
         return [];
     };
     return key("ctrl+s", function() {
-        for (var a = 0; a < c.length; a++) for (var b = 0; b < c[a].notes.saved.length; b++) console.log("{ key: " + c[a].notes.saved[b].key + ", start: " + c[a].notes.saved[b].start.toFixed(3) + ", end: " + c[a].notes.saved[b].end.toFixed(3) + " }");
+        console.log("NOTES: ");
+        for (var a in c) {
+            for (var b in c[a].notes) console.log("{ key: " + c[a].notes[b].key + ", start: " + c[a].notes[b].start.toFixed(3) + ", end: " + c[a].notes[b].end.toFixed(3) + " }");
+            console.log(c[a].notes);
+        }
         return !1;
     }), a.prototype.getTimeRange = function() {
         return this.timeScale.max - this.timeScale.min;
@@ -643,34 +677,48 @@ var PIANO = function() {
     }, a.prototype.yCoordToKey = function(a) {
         return (1 - (a / this.height * this.getKeyRange() + this.keyScale.min)) * this.keyboardSize;
     }, a.prototype.getHoveredNote = function(a, b) {
-        for (var c = this.notes.saved.concat(this.notes.active), d = 0; d < c.length; d++) if (a >= c[d].start && a <= c[d].end && c[d].key - b < 1 && c[d].key - b > 0) return c[d];
+        for (var c = 0; c < this.notes.length; c++) if (a >= this.notes[c].start && a <= this.notes[c].end && this.notes[c].key - b < 1 && this.notes[c].key - b > 0) return this.notes[c];
         return null;
     }, a.prototype.getHoverAction = function(a, b) {
         return b ? this.barToPixels(b.end - b.start) < 15 ? "mid" : this.barToPixels(-1 * b.start + a) < 4 ? "min" : this.barToPixels(b.end - a) < 4 ? "max" : "mid" : "select";
     }, a.prototype.setActiveNotes = function(a, b) {
         if (!a) return void this.clearActiveNotes();
         b || this.clearActiveNotes(), Array.isArray(a) || (a = [ a ]);
-        for (var c = 0; c < a.length; c++) {
-            -1 == this.notes.active.indexOf(a[c]) && this.notes.active.push(a[c]);
-            var d = this.notes.saved.indexOf(a[c]);
-            d > -1 && this.notes.saved.splice(d, 1);
-        }
+        for (var c = 0; c < a.length; c++) -1 == this.notes.indexOf(a[c]) && this.notes.push(a[c]), 
+        a[c].active = !a[c].active;
     }, a.prototype.clearActiveNotes = function() {
-        this.notes.saved = this.notes.saved.concat(this.notes.active), this.notes.active = [];
+        for (var a in this.notes) this.notes[a].active = !1;
     }, a.prototype.applyChangesToActiveNotes = function(a) {
-        if (a) for (var b = 0; b < this.notes.active.length; b++) a.startDelta && (this.notes.active[b].start += a.startDelta), 
-        a.keyDelta && (this.notes.active[b].key += a.keyDelta), a.endDelta && (this.notes.active[b].end += a.endDelta), 
-        this.quantizeNote(this.notes.active[b], a);
-    }, a.prototype.quantizeNote = function(a, b) {
-        return a.key = Math.round(a.key), key.alt ? a : (b && b.startDelta && (a.start = .0625 * Math.round(16 * a.start)), 
-        b && b.endDelta && (a.end = .0625 * Math.round(16 * a.end)), a);
+        if (a) for (var b in this.notes) this.notes[b].active && (a.startDelta && (this.notes[b].start += a.startDelta), 
+        a.keyDelta && (this.notes[b].key += a.keyDelta), a.endDelta && (this.notes[b].end += a.endDelta));
+    }, a.prototype.snapNoteChanges = function(a, b) {
+        return b ? (a.keyDelta = Math.round(a.keyDelta), key.alt ? a : a.startDelta && a.endDelta ? (a.startDelta = a.endDelta = this.snapIndividualValue(a.startDelta, b.start), 
+        a) : (a.startDelta && (a.startDelta = this.snapIndividualValue(a.startDelta, b.start)), 
+        a.endDelta && (a.endDelta = this.snapIndividualValue(a.endDelta, b.end)), a)) : a;
+    }, a.prototype.snapIndividualValue = function(a, b) {
+        var c = .125 * Math.round(8 * a), d = .125 * Math.round(8 * (b + a));
+        return Math.abs(c - a) < Math.abs(d - b - a) ? c : d - b;
+    }, a.prototype.selectNotesInBoundingBox = function(a, b) {
+        for (var c = this.xCoordToBar(a.clientX - this.canvas.clientXYDirectional("x")), d = this.yCoordToKey(a.clientY - this.canvas.clientXYDirectional("y")), e = this.xCoordToBar(b.clientX - this.canvas.clientXYDirectional("x")), f = this.yCoordToKey(b.clientY - this.canvas.clientXYDirectional("y")), g = e > c ? c : e, h = c > e ? c : e, i = f > d ? d : f, j = d > f ? d : f, k = 0; k < this.notes.length; k++) this.notes[k].selected = this.notes[k].start < h && this.notes[k].key < j + 1 && this.notes[k].end > g && this.notes[k].key > i + 0 ? !0 : !1;
+    }, a.prototype.activateSelectedNotes = function() {
+        for (var a = 0; a < this.notes.length; a++) this.notes[a].active = key.shift && this.notes[a].active ^ this.notes[a].selected || 0 == key.shift && this.notes[a].selected, 
+        this.notes[a].selected = !1;
+    }, a.prototype.countActiveNotes = function() {
+        var a = 0;
+        for (var b in this.notes) this.notes[b].active && a++;
+        return a;
+    }, a.prototype.deleteActiveKeys = function() {
+        this.notes = this.notes.filter(function(a) {
+            return 0 == a.active;
+        });
     }, a.prototype.init = function() {
         this.canvas.width = this.width = this.container.clientWidth, this.canvas.height = this.height = this.container.clientHeight;
     }, a.prototype.renderFreshGrid = function() {
         this.canvasContext.clear(), this.canvasContext.backgroundFill("#EEEEEE"), this.renderKeyScale(), 
         this.renderTimeScale();
     }, a.prototype.renderKeyScale = function() {
-        this.canvasContext.lineWidth = 1, this.canvasContext.strokeStyle = "#D4D4E0", this.canvasContext.fillStyle = "#DDDDE4";
+        this.canvasContext.lineWidth = 1, this.canvasContext.setLineDash([]), this.canvasContext.strokeStyle = "#D4D4E0", 
+        this.canvasContext.fillStyle = "#DDDDE4";
         for (var a = this.percentToKey(this.keyScale.min); a <= this.percentToKey(this.keyScale.max); a++) {
             var b = Math.closestHalfPixel(this.keyToYCoord(a - 1)), c = Math.closestHalfPixel(this.keyToYCoord(a));
             b > .5 && this.canvasContext.drawLine(0, b, this.width, b, this.xyFlip), a % 12 in {
@@ -683,33 +731,33 @@ var PIANO = function() {
         }
         this.canvasContext.stroke();
     }, a.prototype.renderTimeScale = function() {
-        this.canvasContext.lineWidth = 1;
+        this.canvasContext.lineWidth = 1, this.canvasContext.setLineDash(key.alt ? [ 2, 4 ] : []);
         for (var a = this.percentToBar(this.timeScale.min) - 1; a < this.percentToBar(this.timeScale.max); a += .25) {
             this.canvasContext.beginPath(), this.canvasContext.strokeStyle = a % 1 ? "#CCD" : "#AAB";
             var b = Math.closestHalfPixel(this.barToXCoord(a));
             this.canvasContext.drawLine(b, 0, b, this.height), this.canvasContext.stroke();
         }
     }, a.prototype.renderNotes = function(a) {
-        this.canvasContext.beginPath(), this.canvasContext.lineWidth = 1, this.canvasContext.strokeStyle = "#812", 
-        this.canvasContext.fillStyle = "#F24";
-        for (var b = 0; b < this.notes.saved.length; b++) this.renderSingleNote(this.notes.saved[b]);
-        this.canvasContext.stroke(), this.canvasContext.beginPath(), this.canvasContext.lineWidth = 1, 
-        this.canvasContext.strokeStyle = "#401", this.canvasContext.fillStyle = "#812";
-        for (var c = 0; c < this.notes.active.length; c++) {
-            var d = {};
-            d.start = a && a.startDelta ? this.notes.active[c].start + a.startDelta : this.notes.active[c].start, 
-            d.key = a && a.keyDelta ? this.notes.active[c].key + a.keyDelta : this.notes.active[c].key, 
-            d.end = a && a.endDelta ? this.notes.active[c].end + a.endDelta : this.notes.active[c].end, 
-            a && (a.keyDelta || a.startDelta || a.endDelta) && this.quantizeNote(d, a), this.renderSingleNote(d);
+        for (var b in this.notes) {
+            if (this.canvasContext.beginPath(), this.canvasContext.lineWidth = 1, this.canvasContext.setLineDash([]), 
+            key.shift && this.notes[b].active ^ this.notes[b].selected || 0 == key.shift && (this.notes[b].selected || this.notes[b].active)) {
+                var c = {};
+                c.start = a && a.startDelta ? this.notes[b].start + a.startDelta : this.notes[b].start, 
+                c.key = a && a.keyDelta ? this.notes[b].key + a.keyDelta : this.notes[b].key, c.end = a && a.endDelta ? this.notes[b].end + a.endDelta : this.notes[b].end, 
+                this.canvasContext.strokeStyle = "#401", this.canvasContext.fillStyle = "#812", 
+                this.renderSingleNote(c);
+            } else this.canvasContext.strokeStyle = "#812", this.canvasContext.fillStyle = "#F24", 
+            this.renderSingleNote(this.notes[b]);
+            this.canvasContext.stroke();
         }
-        this.canvasContext.stroke();
     }, a.prototype.renderSingleNote = function(a) {
         var b = Math.closestHalfPixel(this.barToXCoord(a.start)), c = Math.closestHalfPixel(this.barToXCoord(a.end)), d = Math.closestHalfPixel(this.keyToYCoord(this.keyboardSize - a.key)), e = Math.closestHalfPixel(this.keyToYCoord(this.keyboardSize - a.key + 1));
         this.canvasContext.fillRect(b + 1, d + 2, c - b - 3, e - d - 4), this.canvasContext.strokeRect(b + 0, d + 1, c - b - 1, e - d - 2);
     }, a.prototype.renderSelectionBox = function(a, b) {
-        this.canvasContext.beginPath(), this.canvasContext.lineWidth = 1, this.canvasContext.strokeStyle = "#000", 
-        this.canvasContext.setLineDash([ 2, 4 ]), this.canvasContext.strokeRect(Math.closestHalfPixel(a.clientX - this.canvas.clientXYDirectional("x")), Math.closestHalfPixel(a.clientY - this.canvas.clientXYDirectional("y")), Math.round(b.clientX - a.clientX), Math.round(b.clientY - a.clientY)), 
-        this.canvasContext.stroke(), this.canvasContext.setLineDash([]);
+        var c = Math.closestHalfPixel(a.clientX - this.canvas.clientXYDirectional("x")), d = Math.closestHalfPixel(a.clientY - this.canvas.clientXYDirectional("y")), e = Math.round(b.clientX - a.clientX), f = Math.round(b.clientY - a.clientY);
+        this.canvasContext.beginPath(), this.canvasContext.lineWidth = 1, this.canvasContext.strokeStyle = "rgba(0,0,0,0.5)", 
+        this.canvasContext.fillStyle = "rgba(64,64,64,0.125)", this.canvasContext.fillRect(c, d, e, f), 
+        this.canvasContext.strokeRect(c, d, e, f), this.canvasContext.stroke(), this.canvasContext.setLineDash([]);
     }, {
         add: d,
         getNotes: e
@@ -733,7 +781,7 @@ var TrackMaster = function() {
     };
 }(), Transport = function() {
     var a = [], b = 105, c = new AudioContext(), d = c.createGain();
-    for (d.connect(c.destination), d.gain.value = .0625, key("space", function() {
+    for (d.connect(c.destination), d.gain.value = .25, key("space", function() {
         return g(), !1;
     }), i = 1; 88 >= i; i++) a[i] = 440 * Math.pow(2, (i - 49) / 12);
     var e = function(a) {
@@ -743,7 +791,7 @@ var TrackMaster = function() {
         h.connect(d), h.type = "square", h.frequency.value = a[b], h.start(e(f)), h.stop(e(g));
     }, g = function() {
         var a = PIANO.getNotes(target);
-        for (i in a) f(a[i].key, a[i].start, a[i].end);
+        for (var b in a) f(a[b].key, a[b].start, a[b].end);
     }, h = function() {}, j = function(a) {
         b = a;
     };

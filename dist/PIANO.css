@@ -6,6 +6,71 @@
   height: 100%;
 }
 
+.keyboard {
+  display: block;
+  position: relative;
+  box-sizing: content-box;
+  overflow: hidden;
+  height: 50px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+}
+.keyboard .key {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  cursor: pointer;
+  float: right;
+  border-top: 0px;
+  width: 1.13346557%;
+  height: 100%;
+}
+.keyboard .key.white {
+  border: 1px solid #888;
+  background: #FFF;
+  z-index: 5;
+  width: 1.98356475%;
+  border-right-width: 0px;
+}
+.keyboard .key.white.active,
+.keyboard .key.white:active {
+  background: #FCC;
+  box-shadow: inset 1px -1px #ffaaaa;
+}
+.keyboard .key.black {
+  border: 1px solid #222;
+  background: #555;
+  z-index: 10;
+  box-shadow: 1px 1px 1px #888;
+  width: 1.13346557%;
+  height: 75%;
+  margin: 0px -0.56673279% 0px -0.56673279%;
+}
+.keyboard .key.black.lower {
+  margin: 0px -0.40804761% 0px -0.72541797%;
+}
+.keyboard .key.black.higher {
+  margin: 0px -0.72541797% 0px -0.40804761%;
+}
+.keyboard .key.black.active,
+.keyboard .key.black:active {
+  background: #800;
+  box-shadow: inset 1px -1px #330000;
+}
+.keyboard .key:first-child {
+  border-right-width: 1px;
+}
+.keyboard .key.thinner {
+  width: 1.70019836%;
+}
+.keyboard .key:first-child {
+  width: 1.33182205%;
+}
+.keyboard .key:last-child {
+  float: none;
+  border-right-width: 1px;
+  width: 1.70019836%;
+}
+
 body.curse-words-default {
   cursor: default;
 }

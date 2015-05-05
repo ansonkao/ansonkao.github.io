@@ -552,11 +552,11 @@ var PIANO = function(key) {
             var newCursor = null;
             switch (hoverAction) {
               case "min":
-                newCursor = "xresize";
+                newCursor = "yresize";
                 break;
 
               case "max":
-                newCursor = "xresize";
+                newCursor = "yresize";
                 break;
 
               case "mid":
@@ -582,7 +582,7 @@ var PIANO = function(key) {
 
               case "min":
               case "max":
-                CurseWords.setExplicitCursor("xresize");
+                CurseWords.setExplicitCursor("yresize");
                 break;
 
               case "select":            }
@@ -652,7 +652,7 @@ var PIANO = function(key) {
         key("ctrl+s", function() {
             for (var i = 0; i < $.model.notes.length; i++) console.log("{ key: " + $.model.notes[i].key + ", start: " + $.model.notes[i].start.toFixed(3) + ", end: " + $.model.notes[i].end.toFixed(3) + " }");
             return !1;
-        }), key("del", function() {
+        }), key("del, backspace", function() {
             return $.model.deleteActiveNotes(), $.view.renderFreshGrid(), $.view.renderNotes(), 
             !1;
         }), key("right", function() {
@@ -696,7 +696,7 @@ var PIANO = function(key) {
             }
         });
     }, $.model.container = null, $.model.canvas = null, $.model.canvasContext = null, 
-    $.model.keyboardSize = 88, $.model.clipLength = 16, $.model.width = null, $.model.height = null, 
+    $.model.keyboardSize = 88, $.model.clipLength = 8, $.model.width = null, $.model.height = null, 
     $.model.timeScale = {
         min: .5,
         max: 1
@@ -705,13 +705,14 @@ var PIANO = function(key) {
         max: 1
     }, $.model.notes = null, $.model.isDragging = !1, $.model.isHovering = !1, $.model.maxVelocity = 127, 
     $.model.minVelocity = 0, $.model.velocityRange = $.model.maxVelocity - $.model.minVelocity, 
-    $.model.initialize = function(container, params) {
+    $.model.pixelScale = window.devicePixelRatio || 1, $.model.initialize = function(container, params) {
         $.model.container = container, $.model.canvas = container.appendChild(document.createElement("canvas")), 
         $.model.canvas.className = "piano-canvas", $.model.canvasContext = $.model.canvas.getContext("2d"), 
-        $.model.notes = params.notes;
+        $.model.canvasContext.scale($.model.pixelScale, $.model.pixelScale), $.model.notes = params.notes;
         for (var i in $.controller) $.controller[i]();
     }, $.model.resize = function() {
-        $.model.canvas.width = $.model.width = $.model.container.clientWidth, $.model.canvas.height = $.model.height = $.model.container.clientHeight;
+        $.model.canvas.width = $.model.width = $.model.container.clientWidth * $.model.pixelScale, 
+        $.model.canvas.height = $.model.height = $.model.container.clientHeight * $.model.pixelScale;
     }, $.model.getTimeRange = function() {
         return $.model.timeScale.max - $.model.timeScale.min;
     }, $.model.getKeyRange = function() {
@@ -729,13 +730,13 @@ var PIANO = function(key) {
     }, $.model.keyToXCoord = function(key) {
         return ((88 - key) / $.model.keyboardSize - $.model.keyScale.min) / $.model.getKeyRange() * $.model.width;
     }, $.model.pixelsToBar = function(pixels) {
-        return pixels / $.model.height * $.model.getTimeRange() * $.model.clipLength;
+        return pixels / $.model.height * $.model.pixelScale * $.model.getTimeRange() * $.model.clipLength;
     }, $.model.pixelsToKey = function(pixels) {
-        return (0 + pixels / $.model.width * $.model.getKeyRange()) * $.model.keyboardSize;
+        return (0 + pixels / $.model.width * $.model.pixelScale * $.model.getKeyRange()) * $.model.keyboardSize;
     }, $.model.yCoordToBar = function(yCoord) {
-        return (yCoord / $.model.height * $.model.getTimeRange() + $.model.timeScale.min) * $.model.clipLength;
+        return (yCoord / $.model.height * $.model.pixelScale * $.model.getTimeRange() + $.model.timeScale.min) * $.model.clipLength;
     }, $.model.xCoordToKey = function(xCoord) {
-        return (0 + (xCoord / $.model.width * $.model.getKeyRange() + $.model.keyScale.min)) * $.model.keyboardSize;
+        return (0 + (xCoord / $.model.width * $.model.pixelScale * $.model.getKeyRange() + $.model.keyScale.min)) * $.model.keyboardSize;
     }, $.model.setViewport = function(keyScaleMin, keyScaleMax, timeScaleMin, timeScaleMax) {
         $.model.resize(), $.model.timeScale.min = timeScaleMin, $.model.timeScale.max = timeScaleMax, 
         $.model.keyScale.min = keyScaleMin, $.model.keyScale.max = keyScaleMax;
@@ -773,7 +774,7 @@ var PIANO = function(key) {
         for (var i = 0; i < $.model.notes.length; i++) if (timePositionBars >= $.model.notes[i].start && timePositionBars <= $.model.notes[i].end && $.model.notes[i].key - key < 1 && $.model.notes[i].key - key > 0) return $.model.notes[i];
         return null;
     }, $.model.getHoverAction = function(timePositionBars, hoveredNote) {
-        return hoveredNote ? $.model.barToPixels(hoveredNote.end - hoveredNote.start) < 15 ? "mid" : $.model.barToPixels(-1 * hoveredNote.start + timePositionBars) < 4 ? "min" : $.model.barToPixels(hoveredNote.end - timePositionBars) < 4 ? "max" : "mid" : "select";
+        return hoveredNote ? $.model.barToPixels(hoveredNote.end - hoveredNote.start) < 15 ? "mid" : $.model.barToPixels(-1 * hoveredNote.start + timePositionBars) < 5 ? "min" : $.model.barToPixels(hoveredNote.end - timePositionBars) < 5 ? "max" : "mid" : "select";
     }, $.model.snapNoteChanges = function(delta, targetNote) {
         return targetNote ? (delta.keyDelta = Math.round(delta.keyDelta), key.alt ? delta : delta.startDelta && delta.endDelta ? (delta.startDelta = delta.endDelta = this.snapIndividualValue(delta.startDelta, targetNote.start), 
         delta) : (delta.startDelta && (delta.startDelta = this.snapIndividualValue(delta.startDelta, targetNote.start)), 
@@ -786,11 +787,11 @@ var PIANO = function(key) {
         for (var bar1 = this.yCoordToBar(startEvent.clientY - this.canvas.clientXYDirectional("y")), key1 = this.xCoordToKey(startEvent.clientX - this.canvas.clientXYDirectional("x")), bar2 = this.yCoordToBar(endEvent.clientY - this.canvas.clientXYDirectional("y")), key2 = this.xCoordToKey(endEvent.clientX - this.canvas.clientXYDirectional("x")), barMin = bar2 > bar1 ? bar1 : bar2, barMax = bar1 > bar2 ? bar1 : bar2, keyMin = key2 > key1 ? key1 : key2, keyMax = key1 > key2 ? key1 : key2, i = 0; i < this.notes.length; i++) this.notes[i].start < barMax && this.notes[i].end > barMin && this.notes[i].key < keyMax + 1 && (this.notes[i].selected = this.notes[i].key > keyMin + 0 ? !0 : !1);
         $.model.getAverageVelocity();
     }, $.view.renderFreshGrid = function() {
-        $.model.canvasContext.clear(), $.model.canvasContext.backgroundFill("#EEEEEE"), 
-        $.view.renderKeyScale(), $.view.renderTimeScale();
+        $.model.canvasContext.clear(), $.model.canvasContext.backgroundFill("#789"), $.view.renderKeyScale(), 
+        $.view.renderTimeScale();
     }, $.view.renderKeyScale = function() {
-        $.model.canvasContext.lineWidth = 1, $.model.canvasContext.setLineDash([]), $.model.canvasContext.strokeStyle = "#D4D4E0", 
-        $.model.canvasContext.fillStyle = "#DDDDE4";
+        $.model.canvasContext.lineWidth = 1, $.model.canvasContext.setLineDash([]), $.model.canvasContext.strokeStyle = "#567", 
+        $.model.canvasContext.fillStyle = "#678";
         for (var minKey = $.model.percentToKey($.model.keyScale.min), maxKey = $.model.percentToKey($.model.keyScale.max), key = minKey; maxKey >= key; key++) {
             var prevEdge = Math.closestHalfPixel($.model.keyToXCoord(key - 1)), nextEdge = Math.closestHalfPixel($.model.keyToXCoord(key));
             prevEdge > .5 && $.model.canvasContext.drawLine(prevEdge, 0, prevEdge, $.model.height, !1), 
@@ -806,7 +807,7 @@ var PIANO = function(key) {
     }, $.view.renderTimeScale = function() {
         $.model.canvasContext.lineWidth = 1, $.model.canvasContext.setLineDash(key.alt ? [ 2, 4 ] : []);
         for (var minBar = $.model.percentToBar($.model.timeScale.min) - 1, maxBar = $.model.percentToBar($.model.timeScale.max), bar = minBar; maxBar > bar; bar += .25) {
-            $.model.canvasContext.beginPath(), $.model.canvasContext.strokeStyle = bar % 1 ? "#CCD" : "#AAB";
+            $.model.canvasContext.beginPath(), $.model.canvasContext.strokeStyle = bar % 1 ? "#567" : "#234";
             var yPosition = Math.closestHalfPixel($.model.barToYCoord(bar));
             $.model.canvasContext.drawLine(0, yPosition, $.model.width, yPosition), $.model.canvasContext.stroke();
         }
@@ -819,11 +820,11 @@ var PIANO = function(key) {
                 previewNote.start = params && params.startDelta ? $.model.notes[i].start + params.startDelta : $.model.notes[i].start, 
                 previewNote.key = params && params.keyDelta ? $.model.notes[i].key + params.keyDelta : $.model.notes[i].key, 
                 previewNote.end = params && params.endDelta ? $.model.notes[i].end + params.endDelta : $.model.notes[i].end, 
-                $.model.canvasContext.strokeStyle = "#401", $.model.canvasContext.fillStyle = "#812", 
+                $.model.canvasContext.strokeStyle = "#000", $.model.canvasContext.fillStyle = "#CFD", 
                 $.view.renderSingleNote(previewNote);
             } else {
-                var intensityFactor = $.model.notes[i].velocity / $.model.maxVelocity, r = Math.floor(215 + 32 * intensityFactor), g = Math.floor(160 - 144 * intensityFactor), b = Math.floor(160 - 128 * intensityFactor);
-                $.model.canvasContext.strokeStyle = "#812", $.model.canvasContext.fillStyle = "#" + r.toString(16) + g.toString(16) + b.toString(16), 
+                var intensityFactor = $.model.notes[i].velocity / $.model.maxVelocity, r = Math.floor(0 + 0 * intensityFactor), g = Math.floor(127 + 128 * intensityFactor), b = Math.floor(0 + 0 * intensityFactor);
+                $.model.canvasContext.strokeStyle = "#000", $.model.canvasContext.fillStyle = "rgba(" + r + "," + g + "," + b + ",1)", 
                 $.view.renderSingleNote($.model.notes[i]);
             }
             $.model.canvasContext.stroke();
@@ -832,7 +833,7 @@ var PIANO = function(key) {
         var y1 = Math.closestHalfPixel($.model.barToYCoord(note.start)), y2 = Math.closestHalfPixel($.model.barToYCoord(note.end)), x1 = Math.closestHalfPixel($.model.keyToXCoord($.model.keyboardSize - note.key)), x2 = Math.closestHalfPixel($.model.keyToXCoord($.model.keyboardSize - note.key + 1));
         $.model.canvasContext.fillRect(x1 - 2, y1 + 1, x2 - x1 + 4, y2 - y1 - 3), $.model.canvasContext.strokeRect(x1 - 1, y1 + 0, x2 - x1 + 2, y2 - y1 - 1);
     }, $.view.renderSelectBox = function(startEvent, endEvent) {
-        var x0 = Math.closestHalfPixel(startEvent.clientX - $.model.canvas.clientXYDirectional("x")), y0 = Math.closestHalfPixel(startEvent.clientY - $.model.canvas.clientXYDirectional("y")), width = Math.round(endEvent.clientX - startEvent.clientX), height = Math.round(endEvent.clientY - startEvent.clientY);
+        var x0 = Math.closestHalfPixel((startEvent.clientX - $.model.canvas.clientXYDirectional("x")) * $.model.pixelScale), y0 = Math.closestHalfPixel((startEvent.clientY - $.model.canvas.clientXYDirectional("y")) * $.model.pixelScale), width = Math.round((endEvent.clientX - startEvent.clientX) * $.model.pixelScale), height = Math.round((endEvent.clientY - startEvent.clientY) * $.model.pixelScale);
         $.model.canvasContext.beginPath(), $.model.canvasContext.lineWidth = 1, $.model.canvasContext.strokeStyle = "rgba(0,0,0,0.5)", 
         $.model.canvasContext.fillStyle = "rgba(64,64,64,0.125)", $.model.canvasContext.fillRect(x0, y0, width, height), 
         $.model.canvasContext.strokeRect(x0, y0, width, height), $.model.canvasContext.stroke(), 

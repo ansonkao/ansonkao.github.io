@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>
+        Welcome to StudyMonkey! - StudyMonkey.ca
+    </title>
+    
+
+    <script type="text/javascript" async="" src="dist/ga.js"></script><script type="text/javascript" src="dist/jquery-1.6.3.min.js"></script>
+    <script type="text/javascript" src="dist/jquery.color.js"></script>
+    <link href="dist/home.css" rel="stylesheet" type="text/css">
+    <link href="dist/element_styles.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/x-icon" href="http://www.studymonkey.ca/favicon.ico">
+    <link href="dist/css" rel="stylesheet" type="text/css">
+
+    <script>
+        $(document).ready(function(){
+
+            setTimeout
+                ( function()
+                    { new_speech_bubble( "Try me! Enter the name of your college or university in the search bar." );
+                    }
+                , 8000
+                );
+
+            // School Search - AJAX
+            $("form[name=school_search]").submit(function(){
+                if( $("input[name=search]").val() != "Type the name of your school..." && $.trim($("input[name=search]").val()) != "" )
+                {
+                    $("#search_result").slideUp(100);
+                    $("#magnifying_glass").hide();
+                    $("#loading_gif").show();
+                    $.ajax({
+                        type: "POST",
+                        data: $(this).serialize(),
+                        success: function( data ){
+                            if( data.substring(0, 8) == "REDIRECT" )
+                            {
+                                window.location = "/" + data.substring(9) + "/courses";
+                            }
+                            else
+                            {
+                                $("#loading_gif").hide();
+                                $("#magnifying_glass").show();
+                                $("#search_result").html(data);
+                                $("#search_result").slideDown();
+                            }
+                        }
+                    });
+                }
+                return false;
+            })
+
+            // Place holders for the search box
+            $('input[name=search]').focus(function(){
+                if($(this).val() == "Type the name of your school...")
+                {
+                    $(this).val("");
+                    $(this).css({"fontStyle":"normal", "color":"rgb(0,0,0)"});
+                }
+            }).blur(function(){
+                if($(this).val() == "")
+                {
+                    $(this).val("Type the name of your school...");
+                    $(this).css({"fontStyle":"italic", "color":"rgb(119,136,119)"});
+                }
+            });
+
+        });
+    </script>
+
+<style>@-webkit-keyframes mixmaxSpring{0%{transform:scale(1)}30%{transform:scale(1.05)}100%{transform:scale(1)}}@keyframes mixmaxSpring{0%{transform:scale(1)}30%{transform:scale(1.05)}100%{transform:scale(1)}}@-webkit-keyframes mixmaxFadeIn{0%{opacity:0}100%{opacity:1}}@keyframes mixmaxFadeIn{0%{opacity:0}100%{opacity:1}}.mixmax-m{margin:8px!important}.mixmax-mt{margin-top:8px!important}.mixmax-mr{margin-right:8px!important}.mixmax-mb{margin-bottom:8px!important}.mixmax-ml{margin-left:8px!important}.mixmax-mh{margin-right:8px!important;margin-left:8px!important}.mixmax-mv{margin-top:8px!important;margin-bottom:8px!important}.mixmax-m--{margin:2px!important}.mixmax-mt--{margin-top:2px!important}.mixmax-mr--{margin-right:2px!important}.mixmax-mb--{margin-bottom:2px!important}.mixmax-ml--{margin-left:2px!important}.mixmax-mh--{margin-right:2px!important;margin-left:2px!important}.mixmax-mv--{margin-top:2px!important;margin-bottom:2px!important}.mixmax-m-{margin:4px!important}.mixmax-mt-{margin-top:4px!important}.mixmax-mr-{margin-right:4px!important}.mixmax-mb-{margin-bottom:4px!important}.mixmax-ml-{margin-left:4px!important}.mixmax-mh-{margin-right:4px!important;margin-left:4px!important}.mixmax-mv-{margin-top:4px!important;margin-bottom:4px!important}.mixmax-m\+{margin:16px!important}.mixmax-mt\+{margin-top:16px!important}.mixmax-mr\+{margin-right:16px!important}.mixmax-mb\+{margin-bottom:16px!important}.mixmax-ml\+{margin-left:16px!important}.mixmax-mh\+{margin-right:16px!important;margin-left:16px!important}.mixmax-mv\+{margin-top:16px!important;margin-bottom:16px!important}.mixmax-m\+\+{margin:32px!important}.mixmax-mt\+\+{margin-top:32px!important}.mixmax-mr\+\+{margin-right:32px!important}.mixmax-mb\+\+{margin-bottom:32px!important}.mixmax-ml\+\+{margin-left:32px!important}.mixmax-mh\+\+{margin-right:32px!important;margin-left:32px!important}.mixmax-mv\+\+{margin-top:32px!important;margin-bottom:32px!important}.mixmax-m0{margin:0!important}.mixmax-mt0{margin-top:0!important}.mixmax-mr0{margin-right:0!important}.mixmax-mb0{margin-bottom:0!important}.mixmax-ml0{margin-left:0!important}.mixmax-mh0{margin-right:0!important;margin-left:0!important}.mixmax-mv0{margin-top:0!important;margin-bottom:0!important}.mixmax--m{margin:-8px!important}.mixmax--mt{margin-top:-8px!important}.mixmax--mr{margin-right:-8px!important}.mixmax--mb{margin-bottom:-8px!important}.mixmax--ml{margin-left:-8px!important}.mixmax--mh{margin-right:-8px!important;margin-left:-8px!important}.mixmax--mv{margin-top:-8px!important;margin-bottom:-8px!important}.mixmax--m--{margin:-2px!important}.mixmax--mt--{margin-top:-2px!important}.mixmax--mr--{margin-right:-2px!important}.mixmax--mb--{margin-bottom:-2px!important}.mixmax--ml--{margin-left:-2px!important}.mixmax--mh--{margin-right:-2px!important;margin-left:-2px!important}.mixmax--mv--{margin-top:-2px!important;margin-bottom:-2px!important}.mixmax--m-{margin:-4px!important}.mixmax--mt-{margin-top:-4px!important}.mixmax--mr-{margin-right:-4px!important}.mixmax--mb-{margin-bottom:-4px!important}.mixmax--ml-{margin-left:-4px!important}.mixmax--mh-{margin-right:-4px!important;margin-left:-4px!important}.mixmax--mv-{margin-top:-4px!important;margin-bottom:-4px!important}.mixmax--m\+{margin:-16px!important}.mixmax--mt\+{margin-top:-16px!important}.mixmax--mr\+{margin-right:-16px!important}.mixmax--mb\+{margin-bottom:-16px!important}.mixmax--ml\+{margin-left:-16px!important}.mixmax--mh\+{margin-right:-16px!important;margin-left:-16px!important}.mixmax--mv\+{margin-top:-16px!important;margin-bottom:-16px!important}.mixmax--m\+\+{margin:-32px!important}.mixmax--mt\+\+{margin-top:-32px!important}.mixmax--mr\+\+{margin-right:-32px!important}.mixmax--mb\+\+{margin-bottom:-32px!important}.mixmax--ml\+\+{margin-left:-32px!important}.mixmax--mh\+\+{margin-right:-32px!important;margin-left:-32px!important}.mixmax--mv\+\+{margin-top:-32px!important;margin-bottom:-32px!important}.mixmax-p{padding:8px!important}.mixmax-pt{padding-top:8px!important}.mixmax-pr{padding-right:8px!important}.mixmax-pb{padding-bottom:8px!important}.mixmax-pl{padding-left:8px!important}.mixmax-ph{padding-right:8px!important;padding-left:8px!important}.mixmax-pv{padding-top:8px!important;padding-bottom:8px!important}.mixmax-p--{padding:2px!important}.mixmax-pt--{padding-top:2px!important}.mixmax-pr--{padding-right:2px!important}.mixmax-pb--{padding-bottom:2px!important}.mixmax-pl--{padding-left:2px!important}.mixmax-ph--{padding-right:2px!important;padding-left:2px!important}.mixmax-pv--{padding-top:2px!important;padding-bottom:2px!important}.mixmax-p-{padding:4px!important}.mixmax-pt-{padding-top:4px!important}.mixmax-pr-{padding-right:4px!important}.mixmax-pb-{padding-bottom:4px!important}.mixmax-pl-{padding-left:4px!important}.mixmax-ph-{padding-right:4px!important;padding-left:4px!important}.mixmax-pv-{padding-top:4px!important;padding-bottom:4px!important}.mixmax-p\+{padding:16px!important}.mixmax-pt\+{padding-top:16px!important}.mixmax-pr\+{padding-right:16px!important}.mixmax-pb\+{padding-bottom:16px!important}.mixmax-pl\+{padding-left:16px!important}.mixmax-ph\+{padding-right:16px!important;padding-left:16px!important}.mixmax-pv\+{padding-top:16px!important;padding-bottom:16px!important}.mixmax-p\+\+{padding:32px!important}.mixmax-pt\+\+{padding-top:32px!important}.mixmax-pr\+\+{padding-right:32px!important}.mixmax-pb\+\+{padding-bottom:32px!important}.mixmax-pl\+\+{padding-left:32px!important}.mixmax-ph\+\+{padding-right:32px!important;padding-left:32px!important}.mixmax-pv\+\+{padding-top:32px!important;padding-bottom:32px!important}.mixmax-p0{padding:0!important}.mixmax-pt0{padding-top:0!important}.mixmax-pr0{padding-right:0!important}.mixmax-pb0{padding-bottom:0!important}.mixmax-pl0{padding-left:0!important}.mixmax-ph0{padding-right:0!important;padding-left:0!important}.mixmax-pv0{padding-top:0!important;padding-bottom:0!important}.mixmax-hint-modal{display:flex;position:fixed;top:0;left:0;width:100%;height:100%;z-index:167772710000;text-align:center;background-color:rgba(10,15,20,.65);perspective:1300px;backface-visibility:hidden;-webkit-animation:mixmaxFadeIn 200ms 1;animation:mixmaxFadeIn 200ms 1}.mixmax-hint-modal__inner{font-family:Roboto;border-radius:3px;margin:auto;max-width:400px;max-height:420px;overflow:hidden;box-shadow:0 0 20px rgba(10,15,20,.4);position:relative;-webkit-animation:flip-in 350ms 1;animation:flip-in 350ms 1;background:#3c7de6;color:#fff}.mixmax-hint-modal__inner h3{font-weight:500;margin:0;padding:0;font-size:21px;font-family:Roboto}.mixmax-hint-modal__inner p.mixmax-milli{line-height:1.5em;margin-bottom:0}.mixmax-hint-modal__inner .mixmax-separator-horizontal{margin-top:12px!important;margin-bottom:12px!important}.mixmax-hint-modal__inner .mixmax-icon--remove{position:absolute;background-color:rgba(10,15,20,.15);color:rgba(255,255,255,.5);right:10px;top:10px;width:18px;height:18px;line-height:18px;font-size:15px;border-radius:999px;font-style:normal;text-align:center}.mixmax-hint-modal__inner .mixmax-icon--remove:hover{background-color:#0a0f14;color:#fff}.mixmax-hint-modal__inner .mixmax-icon--remove:before{content:'\00d7';position:relative;left:.5px}.mixmax-hint-modal__ft{background-color:#fff}.mixmax-hint-modal__command{display:inline-block;background-color:rgba(10,15,20,.5);border-radius:5px;margin-top:16px;padding:12px 16px}.mixmax-hint-modal__btn{cursor:pointer;color:rgba(10,15,20,.8)}.mixmax-hint-modal__btn:hover{background-color:rgba(60,125,230,.17)}.mixmax-hint-modal__btn--primary{font-weight:500;margin-right:-1px;color:#1b62d4}.mixmax-hint-modal-message{word-wrap:break-word}.mixmax-hint-modal-textarea{display:block;width:100%;background:rgba(0,0,0,.1);border:1px solid rgba(0,0,0,.1);padding:8px 12px;height:96px;border-radius:2px;box-sizing:border-box;color:#fff;line-height:1.5}.mixmax-hint-modal-textarea:focus{outline:0}@keyframes flip-in{0%{opacity:0;transform:rotateX(70deg)}100%{opacity:1;transform:rotateX(0)}}.mixmax-sidebar-anywhere-wrapper,.mixmax-tasks{position:fixed;top:0;bottom:0;right:0;border:0;box-shadow:-4px 0 15px rgba(10,20,30,.25);background:#fff}.mixmax-sidebar-anywhere-wrapper{z-index:16777279998}.mixmax-tasks{z-index:16777279999;width:520px;height:100%}.mixmax-loading-spinner{background:url(assets/img/spinner-1x.gif) center center/18px 18px no-repeat #fff;transition:all 150ms ease-in-out}@media only screen and (-webkit-min-device-pixel-ratio:2),only screen and (min-device-pixel-ratio:2),only screen and (min-resolution:192dpi),only screen and (min-resolution:2dppx){.mixmax-loading-spinner{background-image:url(assets/img/spinner-2x.gif)}}</style></head>
+
+<body>
+    
+    <div id="content_wrapper">
+        <div id="content">
+
+            <div id="content_body_top">
+
+                <img src="dist/logo_home.png" alt="StudyMonkey.ca">
+
+                <table border="0" cellpadding="0" cellspacing="0" style="margin: 20px auto 0;">
+                    <tbody><tr>
+                        <td valign="center">
+                            <img src="dist/courses_medium.png" alt="Course Reviews">
+                            &nbsp; &nbsp;
+                        </td>
+                        <td valign="center" align="left">
+                            <h1 style="margin: 0px;">Course Reviews</h1>
+                        </td>
+                        <td rowspan="3" style="width: 40px;">
+                            &nbsp; <!-- SPACER -->
+                        </td>
+                        <td valign="center">
+                            <img src="dist/professors_medium.png" alt="Professor Ratings">
+                            &nbsp; &nbsp;
+                        </td>
+                        <td valign="center" align="left">
+                            <h1 style="margin: 0px;">Professor Ratings</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp; <!-- SPACER -->
+                        </td>
+                        <td valign="top" align="left">
+                            <p style="font-size: 14px;">
+                                Picking courses for next semester?
+                                <br>
+                                Find out what others say are the
+                                <br>
+                                easiest and the best to take.
+                            </p>
+                        </td>
+                        <td>
+                            &nbsp; <!-- SPACER -->
+                        </td>
+                        <td valign="top" align="left">
+                            <p style="font-size: 14px;">
+                                Who are the best (and worst)
+                                <br>
+                                professors at your school?
+                                <br>
+                                Get the inside scoop here!
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="2">
+                            <img src="dist/arrow_a.png" alt="Arrow">
+                        </td>
+                        <td align="center" colspan="2">
+                            <img src="dist/arrow_b.png" alt="Arrow">
+                        </td>
+                    </tr>
+                </tbody></table>
+
+            </div>
+
+        </div>
+
+        <div id="content_body_bottom">
+
+            <form name="school_search" method="post">
+                <table border="0" cellspacing="10" cellpadding="0" style="margin: 25px auto 0;">
+                    <tbody><tr>
+                        <td valign="center">
+                            <input id="search_box" class="placeholder huge" type="text" name="search" value="Type the name of your school...">
+                        </td>
+                        <td valign="center">
+                            <button class="huge" type="submit">
+                                <img id="magnifying_glass" src="dist/search_large.png" alt="Search">
+                                <img id="loading_gif" src="dist/loading.gif" alt="Search" style="display: none;">
+                            </button>
+                        </td>
+                    </tr>
+                </tbody></table>
+            </form>
+
+            <div style="font: italic 12px arial; color: #777; text-align: center;">
+                3,287 student opinions at 29 Canadian schools so far!
+            </div>
+
+            <div id="search_result">
+            </div>
+
+            <div style="margin: 36px auto; width: 420px;">
+
+                <table border="0" cellspacing="0" cellpadding="0" style="float: left; width: 200px;">
+                    <tbody><tr>
+                        <td align="left" colspan="2">
+                            <h2 style="font: bold 14px arial; padding: 0 0 10px; margin: 0px; text-align: left;">
+                                Popular courses
+                            </h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" style="width: 36px; height: 60px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/courses/psych101">
+                                <img src="dist/courses.png" style="margin-right: 5px;">
+                            </a>
+                        </td>
+                        <td align="left" valign="top" style="padding-top: 5px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/courses/psych101">
+                                <strong>PSYCH101</strong>
+                            </a>
+                            <br>
+                            <span style="font-size: 11px; color: #888;">University of Waterloo</span>
+                            <div class="transparent" style="padding-top: 2px;">
+                                <div style="margin-right: 5px; height: 12px; width: 60px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll top; text-align: left; float: left;">
+                                    <div style="height: 12px; width: 45px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll left bottom;">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div style="float: left; font: normal 10px arial;">77 reviews</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" style="width: 36px; height: 60px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/courses/econ101">
+                                <img src="dist/courses.png" style="margin-right: 5px;">
+                            </a>
+                        </td>
+                        <td align="left" valign="top" style="padding-top: 5px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/courses/econ101">
+                                <strong>ECON101</strong>
+                            </a>
+                            <br>
+                            <span style="font-size: 11px; color: #888;">University of Waterloo</span>
+                            <div class="transparent" style="padding-top: 2px;">
+                                <div style="margin-right: 5px; height: 12px; width: 60px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll top; text-align: left; float: left;">
+                                    <div style="height: 12px; width: 42px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll left bottom;">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div style="float: left; font: normal 10px arial;">47 reviews</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" style="width: 36px; height: 60px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/courses/afm101">
+                                <img src="dist/courses.png" style="margin-right: 5px;">
+                            </a>
+                        </td>
+                        <td align="left" valign="top" style="padding-top: 5px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/courses/afm101">
+                                <strong>AFM101</strong>
+                            </a>
+                            <br>
+                            <span style="font-size: 11px; color: #888;">University of Waterloo</span>
+                            <div class="transparent" style="padding-top: 2px;">
+                                <div style="margin-right: 5px; height: 12px; width: 60px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll top; text-align: left; float: left;">
+                                    <div style="height: 12px; width: 41px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll left bottom;">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div style="float: left; font: normal 10px arial;">33 reviews</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" style="width: 36px; height: 60px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/courses/chem120">
+                                <img src="dist/courses.png" style="margin-right: 5px;">
+                            </a>
+                        </td>
+                        <td align="left" valign="top" style="padding-top: 5px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/courses/chem120">
+                                <strong>CHEM120</strong>
+                            </a>
+                            <br>
+                            <span style="font-size: 11px; color: #888;">University of Waterloo</span>
+                            <div class="transparent" style="padding-top: 2px;">
+                                <div style="margin-right: 5px; height: 12px; width: 60px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll top; text-align: left; float: left;">
+                                    <div style="height: 12px; width: 38px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll left bottom;">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div style="float: left; font: normal 10px arial;">33 reviews</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" style="width: 36px; height: 60px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/courses/biol130">
+                                <img src="dist/courses.png" style="margin-right: 5px;">
+                            </a>
+                        </td>
+                        <td align="left" valign="top" style="padding-top: 5px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/courses/biol130">
+                                <strong>BIOL130</strong>
+                            </a>
+                            <br>
+                            <span style="font-size: 11px; color: #888;">University of Waterloo</span>
+                            <div class="transparent" style="padding-top: 2px;">
+                                <div style="margin-right: 5px; height: 12px; width: 60px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll top; text-align: left; float: left;">
+                                    <div style="height: 12px; width: 44px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll left bottom;">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div style="float: left; font: normal 10px arial;">30 reviews</div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody></table>
+
+                <table border="0" cellspacing="0" cellpadding="0" style="float: left; margin-left: 10px; width: 200px;">
+                    <tbody><tr>
+                        <td align="left" colspan="2">
+                            <h2 style="font: bold 14px arial; padding: 0 0 10px; margin: 0px; text-align: left;">
+                                Popular professors
+                            </h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" style="width: 36px; height: 60px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/professors/richard_ennis">
+                                <img src="dist/professors.png" style="margin-right: 5px;">
+                            </a>
+                        </td>
+                        <td align="left" valign="top" style="padding-top: 5px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/professors/richard_ennis">
+                                <strong>Ennis, Richard</strong>
+                            </a>
+                            <br>
+                            <span style="font-size: 11px; color: #888;">University of Waterloo</span>
+                            <div class="transparent" style="padding-top: 2px;">
+                                <div style="margin-right: 5px; height: 12px; width: 60px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll top; text-align: left; float: left;">
+                                    <div style="height: 12px; width: 53px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll left bottom;">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div style="float: left; font: normal 10px arial;">36 ratings</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" style="width: 36px; height: 60px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/professors/niels_bols">
+                                <img src="dist/professors.png" style="margin-right: 5px;">
+                            </a>
+                        </td>
+                        <td align="left" valign="top" style="padding-top: 5px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/professors/niels_bols">
+                                <strong>Bols, Niels</strong>
+                            </a>
+                            <br>
+                            <span style="font-size: 11px; color: #888;">University of Waterloo</span>
+                            <div class="transparent" style="padding-top: 2px;">
+                                <div style="margin-right: 5px; height: 12px; width: 60px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll top; text-align: left; float: left;">
+                                    <div style="height: 12px; width: 51px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll left bottom;">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div style="float: left; font: normal 10px arial;">26 ratings</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" style="width: 36px; height: 60px;">
+                            <a href="http://www.studymonkey.ca/university-of-toronto/professors/dax_urbszat">
+                                <img src="dist/professors.png" style="margin-right: 5px;">
+                            </a>
+                        </td>
+                        <td align="left" valign="top" style="padding-top: 5px;">
+                            <a href="http://www.studymonkey.ca/university-of-toronto/professors/dax_urbszat">
+                                <strong>Urbszat, Dax</strong>
+                            </a>
+                            <br>
+                            <span style="font-size: 11px; color: #888;">University of Toronto</span>
+                            <div class="transparent" style="padding-top: 2px;">
+                                <div style="margin-right: 5px; height: 12px; width: 60px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll top; text-align: left; float: left;">
+                                    <div style="height: 12px; width: 52px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll left bottom;">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div style="float: left; font: normal 10px arial;">26 ratings</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" style="width: 36px; height: 60px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/professors/robert_sproule">
+                                <img src="dist/professors.png" style="margin-right: 5px;">
+                            </a>
+                        </td>
+                        <td align="left" valign="top" style="padding-top: 5px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/professors/robert_sproule">
+                                <strong>Sproule, Robert</strong>
+                            </a>
+                            <br>
+                            <span style="font-size: 11px; color: #888;">University of Waterloo</span>
+                            <div class="transparent" style="padding-top: 2px;">
+                                <div style="margin-right: 5px; height: 12px; width: 60px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll top; text-align: left; float: left;">
+                                    <div style="height: 12px; width: 38px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll left bottom;">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div style="float: left; font: normal 10px arial;">23 ratings</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" style="width: 36px; height: 60px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/professors/angela_trimarchi">
+                                <img src="dist/professors.png" style="margin-right: 5px;">
+                            </a>
+                        </td>
+                        <td align="left" valign="top" style="padding-top: 5px;">
+                            <a href="http://www.studymonkey.ca/university-of-waterloo/professors/angela_trimarchi">
+                                <strong>Trimarchi, Angela</strong>
+                            </a>
+                            <br>
+                            <span style="font-size: 11px; color: #888;">University of Waterloo</span>
+                            <div class="transparent" style="padding-top: 2px;">
+                                <div style="margin-right: 5px; height: 12px; width: 60px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll top; text-align: left; float: left;">
+                                    <div style="height: 12px; width: 33px; background: transparent url(&#39;http://www.studymonkey.ca/image/rating/star_rating_small.gif&#39;) repeat-x scroll left bottom;">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div style="float: left; font: normal 10px arial;">23 ratings</div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody></table>
+
+            </div>
+
+        </div>
+
+        <div id="content_end"></div>
+    </div>
+
+    <div id="footer">
+        <ul>
+            <li><a href="http://www.studymonkey.ca/terms">Terms</a> </li>
+            <li><a href="http://www.studymonkey.ca/privacy">Privacy</a> </li>
+            <li><a href="http://www.studymonkey.ca/contact">Contact</a> </li>
+        </ul>
+        <div style="color: #888; font-size: 11px;">
+            © 2011 StudyMonkey Inc.
+        </div>
+    </div>
+
+<!-- =========================== START MASCOT ============================== -->
+    <script>
+
+        // Speech bubble flag
+        var speech_bubble_open = true;
+
+        function show_speech_bubble()
+        {
+            speech_bubble_open = true;
+            $("#speech_bubble").stop().hide().css({opacity: 1}).fadeIn(500).fadeOut(12000);
+        }
+
+        function new_speech_bubble( message )
+        {
+            $("#speech_bubble_text").html( message );
+            show_speech_bubble();
+        }
+
+        $(document).ready(function(){
+
+            // Hover to keep speech bubble alive
+            $("#speech_bubble").mouseover(function(){
+                if (speech_bubble_open)
+                    $(this).stop().css({opacity: 1}).fadeOut(12000);
+            });
+
+            // Click to close the speech bubble
+            $("#speech_bubble_close").click(function(){
+                speech_bubble_open = false;
+                $("#speech_bubble").stop().fadeOut(250);
+                return false;
+            });
+
+            // Click on the mascot to get random messages
+            var random_messages = new Array();
+            random_messages[1] = "Hehehe stop clicking me - it tickles!";
+            random_messages[2] = "Ow, stop poking me! That really hurt!";
+            random_messages[3] = "Hello!  Wanna be friends?";
+            random_messages[4] = "I'm so hungry! I could use a banana right now...";
+            $("#mascot").click(function(){
+                new_speech_bubble( random_messages[ Math.ceil( Math.random() * 4 ) ] );
+            });
+
+        });
+    </script>
+
+    <div id="toolbar_wrapper">
+        <div id="toolbar">
+            <img id="mascot" src="dist/mascot.png">
+            <div id="speech_bubble" class="round_box" style="opacity: 1; display: none;">
+                <a id="speech_bubble_close" href="http://www.studymonkey.ca/#">×</a>
+                <span id="speech_bubble_text">Try me! Enter the name of your college or university in the search bar.</span>
+                <div id="speech_bubble_tail"></div>
+                <div id="speech_bubble_tail_border"></div>
+            </div>
+        </div>
+    </div>
+<!-- ============================ END MASCOT =============================== -->
+
+
+
+</body></html>

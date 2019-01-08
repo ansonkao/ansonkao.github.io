@@ -20,24 +20,22 @@
     <meta name="author" content="Anson Kao" />
     <meta property="og:site_name" content="Anson Kao" />
     <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.ansonkao.com/" />
     <meta property="og:title" content="Anson Kao" />
     <meta property="og:description" content="Fanatically obsessed with the intersection of creative arts, technology, and design." />
-    <!--
     <meta property="og:image" content="img/ansonkao.png" />
-    <meta property="og:image:width" content="960" />
-    <meta property="og:image:height" content="960" />
-    -->
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="800" />
+    <meta property="fb:app_id" content="10102488747827427" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="" />
     <meta name="twitter:url" content="https://www.ansonkao.com/" />
     <meta name="twitter:title" content="Anson Kao" />
     <meta name="twitter:description" content="Fanatically obsessed with the intersection of creative arts, technology, and design." />
-    <!--
     <meta name="twitter:image" content="img/ansonkao.png" />
-    <meta name="twitter:image:width" content="960" />
-    <meta name="twitter:image:height" content="960" />
-    -->
+    <meta name="twitter:image:width" content="800" />
+    <meta name="twitter:image:height" content="800" />
     <link rel="apple-touch-icon" href="https://cdn.about.me/s3/h/favicon/favicon_180.dc2f5125.png" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="icon" href="https://cdn.about.me/s3/h/favicon/favicon_48.d67d3678.png" sizes="48x48" />
@@ -70,7 +68,7 @@
             vertical-align: baseline;
             font-family: 'Fira Sans', sans-serif;
             font-weight: 300;
-            color: #FFF;
+            color: #CCC;
         }
         article, aside, details, figcaption, figure, 
         footer, header, hgroup, menu, nav, section {
@@ -102,6 +100,14 @@
             border-top: 1px solid #888;
             width: 100px;
             margin: 50px auto;
+        }
+        header {
+            text-align: center;
+        }
+        header img {
+            border-radius: 50%;
+            width: 140px;
+            margin: 0 auto 20px;
         }
         h1 {
             font-size: 36px;
@@ -137,7 +143,7 @@
             margin: 3px;
         }
         .social-icon {
-            fill: #FFF;
+            fill: #CCC;
             height: 30px;
             width: 30px;
         }
@@ -174,6 +180,10 @@
                 width: 200px;
                 margin: 80px auto;
             }
+            header img {
+                width: 200px;
+                margin: 0 auto 20px;
+            }
             h1 {
                 font-size: 80px;
                 margin-bottom: 30px;
@@ -205,7 +215,7 @@
                 width: 50px;
             }
             .social-icon:hover {
-                fill: #888;
+                fill: #FFF;
                 transition: fill 0.125s;
             }
             .cool-stuff-links {
@@ -227,6 +237,7 @@
 <body>
     <main>
         <header>
+            <img src="img/ansonkao.png" alt="Anson Kao" />
             <h1>Anson Kao</h1>
             <h2>Entrepreneur, Engineer, Creator</h2>
             <h3>📍 Toronto, Canada 🇨🇦</h3>
@@ -287,24 +298,24 @@
         </section>
         <hr/>
         <section>
-            <h2>#😎coolstuff</h2>
+            <h2>#coolstuff</h2>
             <ul class="cool-stuff-links">
                 <li>
-                    <a href="studymonkey.ca">StudyMonkey.ca</a> - my first startup circa 2010,
-                    a note-sharing marketplace for college students! The site is defunct now,
-                    but I've kept some static relics from the branding for old-times sake.
-                    Really proud of the branding and our mascot, Spunkey the Monkey!
-                </li>
-                <li>
-                    <a href="piano-js">Piano.js</a> - messing around with browser-based
-                    audio for Music Hack events in 2015! This eventually turned into my second startup,
-                    Phrase Technologies (now defunct). When I have time... I'll try to get a demo back up
-                    of the full product.
+                    <a href="piano-js">Phrase.fm</a> - my second startup circa 2016, a web-based
+                        digital audio workstation (now defunct)! I'll put up a full working demo of the
+                        product when I have a chance. In the meantime, the link points to a super early prototype from
+                        some music-hack events which eventually lead to the founding of Phrase.
                 </li>
                 <li>
                     <a href="gripscroll">GripScroll.js</a> - my first open-source javascript
                     library, a custom scrollbar! Vanilla JS, before I discovered JS frameworks in 2014.
                     Never promoted it.
+                </li>
+                <li>
+                    <a href="studymonkey.ca">StudyMonkey.ca</a> - my first startup circa 2010,
+                        a note-sharing marketplace for college students! The site is defunct now,
+                        but I've kept some static relics from the branding for old-times sake.
+                        Really proud of the branding and our mascot, Spunkey the Monkey!
                 </li>
             </ul>
         </section>

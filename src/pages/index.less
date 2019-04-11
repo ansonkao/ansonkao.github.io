@@ -1,0 +1,199 @@
+// ============================================================================
+// Global Reset
+// ============================================================================
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #012;
+    min-height: 100%;
+}
+
+.global-ansonkao {
+    min-height: 100vh;
+    box-sizing: border-box;
+    background-color: #123;
+    background-image: linear-gradient(to left, #123, #135, #123);
+
+    div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed, 
+    figure, figcaption, footer, header, hgroup, 
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+        font-family: 'Fira Sans', sans-serif;
+        font-weight: 300;
+        color: #FFF;
+        text-shadow: 0 2px 10px fade(#000, 40%);
+    }
+
+    a {
+        text-decoration: none;
+        transition: opacity 0.125s;
+        &:hover { opacity: 0.64; }
+    }
+
+    article, aside, details, figcaption, figure, 
+    footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+
+    ol, ul {
+        list-style: none;
+    }
+}
+
+
+// ============================================================================
+// Mobile 1st
+// ============================================================================
+.global-ansonkao-home {
+    h1 { font-size: 36px; text-align: center; font-weight: 600; margin-bottom: 10px; }
+    h2 { font-size: 16px; text-align: center; font-weight: 600; margin-bottom: 10px; }
+    h3 { font-size: 16px; text-align: center; margin-bottom: 40px; }
+    h4 { font-size: 16px; text-align: center; }
+    p  { font-size: 14px; line-height: 1.4; }
+    hr {
+        border: 0;
+        border-top: 1px solid #AAA;
+        width: 100px;
+        margin: 50px auto;
+        box-shadow: 0 1px 5px 0 fade(#000, 100%);
+    }  
+
+    .main {
+        max-width: 80%;
+        width: 500px;
+        margin: auto;
+        padding-top: 60px;
+        line-height: 1;
+
+    }
+    .section {
+        margin-bottom: 30px;
+    }
+    .header {
+        text-align: center;
+
+        img {
+            border-radius: 50%;
+            width: 140px;
+            margin: 0 auto 20px;
+            box-shadow:
+                0 0 10px 0 fade(#000, 50%),
+                0 0 40px 0 #246;
+        }
+    }
+    .social-links {
+        margin-top: 10px;
+        text-align: center;
+
+        li {
+            display: inline-block;
+            margin: 3px;
+        }
+    }
+    .social-icon {
+        fill: #FFF;
+        height: 30px;
+        width: 30px;
+        box-shadow: 0 2px 10px 0 fade(#000, 50%);
+        border-radius: 50%;
+    }
+    .cool-stuff-links {
+        margin-top: 20px;
+        font-size: 14px;
+        line-height: 1.4;
+        text-align: left;
+    }
+    .cool-stuff-links li {
+        text-indent: -22px;
+        padding-left: 20px;
+        margin-bottom: 10px;
+    }
+    a {
+        text-decoration: underline;
+    }
+    .footer {
+        margin: 60px auto 0;
+        padding-bottom: 60px;
+        text-align: center;
+        font-size: 12px;
+        color: #DDD;
+    }
+    
+}
+
+// ============================================================================
+// Desktop
+// ============================================================================
+@media (min-width:960px) {
+
+    .global-ansonkao-home {
+
+        h1 { font-size: 80px; margin-bottom: 30px; }
+        h2 { font-size: 30px; margin-bottom: 30px; }
+        h3 { font-size: 30px; margin-bottom: 40px; }
+        h4 { font-size: 24px; }
+        p { font-size: 18px; line-height: 1.8; }
+        hr { width: 200px; margin: 80px auto; }
+
+        .main {
+            width: 600px;
+            padding-top: 120px;
+
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .header img {
+            width: 200px;
+            margin: 0 auto 20px;
+        }
+        .social-links {
+            margin-top: 10px;
+            
+            li {
+                display: inline-block;
+                margin: 10px;
+            }
+        }
+        .social-icon {
+            height: 50px;
+            width: 50px;
+
+            &:hover {
+                fill: #888;
+                transition: fill 0.125s;
+            }
+        }
+        .cool-stuff-links {
+            margin-top: 30px;
+            font-size: 18px;
+            line-height: 1.4;
+
+            li {
+                margin-bottom: 24px;
+            }
+        }
+        .footer {
+            margin: 80px auto 0;
+            padding-bottom: 80px;
+            font-size: 14px;
+        }
+
+    }
+
+}

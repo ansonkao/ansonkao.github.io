@@ -16,16 +16,16 @@ class NotFoundPage extends React.Component {
         <article className="article article-404">
           <header className="article-header">
             <h1 className="article-title">
-              Page Not Found
+              <span role="img" aria-label="ERROR">⛔️</span> Page Not Found
             </h1>
-            <p>You just hit a route that doesn't exist... the sadness.</p>
+            <p>Don't give up! The paths that don't lead anywhere are the ones that guide us to the paths we seek.</p>
             <p>
               <Link to="/" className="article-404-nav-links">
-                🏠 Home
+                <span role="img" aria-label="icon">🏠</span> Home
               </Link>
               &middot;
               <Link to="/blog" className="article-404-nav-links">
-                📚 Blog
+                <span role="img" aria-label="icons Volumes">📚</span> Blog
               </Link>
             </p>
           </header>

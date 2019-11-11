@@ -1,6 +1,6 @@
 import React from "react"
 import Helmet from "react-helmet"
-// import { Link } from "gatsby"
+import { Link } from "gatsby"
 
 import SEO from "../components/seo"
 import AnsonPic from "../../content/assets/ansonkao.png"
@@ -38,16 +38,80 @@ class Home extends React.Component {
           </header>
           <section className="section">
             <p>
-              Hi! My name is Anson, and I'm based out of Toronto. I am fanatically 
-              obsessed with the intersection of creative arts, technology, and design.
-              These passions, and the ability for what we do to profoundly impact the
-              lives of others on this planet, are what drive me to bring people
-              together and build great things.
+              <em>Hi! My name is Anson, and I'm based out of Toronto.</em>&nbsp;
+              I'm an entrepreneur with a decade-long background in technology, startups,
+              and more recently: film. I love bringing people together to
+              create the future.
             </p>
+
+            <h1>
+              <span role="img" aria-label="icon">💻</span> Technology
+            </h1>
+            <p>
+              Today, I'm a seasoned internet startup and software engineering veteran.
+              I have started several ventures of my own and joined many others,
+              in one instance helping scale technology to 3 million users.
+              I can run small teams, advise on strategy/architecture,
+              and write ReactJS code at a level few others in Toronto can.
+              Some startups hire me for these reasons on a contract basis,
+              and you can too (<a href="#connect">contact me</a>).
+              I studied Mechatronics Engineering at the University of Waterloo, and
+              I feel very at home in a machine shop, at the drawing board, at the computer,
+              as well as on the phone.
+            </p>
+            <h1>
+              <span role="img" aria-label="icon">🎥</span> Film
+            </h1>
+            <p>
+              While I've always been good at technology,
+              I find that my highest calling is not technology itself,
+              but in using technology to give people emotionally charged experiences.
+              Towards that end, what could be better medium than film?
+              &nbsp;<em>I believe film is the ultimate art form.</em>
+            </p>
+            <p>
+              Over the past 18 months, I have indulged in a selection of creative film projects.
+              Exploring the production of live action short films has been very fulfilling
+              creatively, and very exciting from an entrepreneurship standpoint.
+              I am searching for overlooked opportunities to build the future in this space.
+              If the same is true for you, we should connect.
+            </p>
+            {/*             
+            <p>
+              &nbsp;<em>Film is the ultimate form of creative expression</em>, in my opinion.
+              It combines all other art forms, e.g. photography, acting,
+              musical composition and performance, poetry, dance, fashion, etc.
+              It is fully immersive - the director takes you into their world and you get lost in it.
+              Film has the ability to capture the imagination of the masses and inspire a generation.
+              I find myself hard-pressed to find a higher calling than this. 
+            </p>
+            <h2>
+              <span role="img" aria-label="icon">🤖</span> Terminator 2: Judgement Day
+            </h2>
+            <p>
+              Ah... the movie that started it all for me.
+            </p>
+            <h1>
+              <span role="img" aria-label="icon">💻</span> Music
+            </h1>
+            <p>
+              ...
+            </p>
+            */}
           </section>
+          <a name="connect" />
           <section className="section">
             <h4>Connect with me:</h4>
             <ul className="social-links">
+              {/*
+              <li>
+                <Link to="/blog" title="Read my blog">
+                  <svg className="social-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-.994 9.095l2.974-2.884c.144-.14.331-.211.516-.211.188 0 .375.073.518.22l-4.032 3.911c-.283-.294-.268-.752.024-1.036zm-4.49 8.819c-.06.057-.136.086-.212.086-.168 0-.304-.137-.304-.304 0-.079.031-.159.093-.218l.5-.485.422.436-.499.485zm4.034-2.386c-.919.891-1.796 1.333-3.013 1.728l-.754-.779c.433-1.205.901-2.067 1.819-2.958l1.71-1.657 1.946 2.009-1.708 1.657zm6.965-6.483l-4.402 4.269-2.218-2.29 4.402-4.27c1.016-.984 2.703-.246 2.703 1.146 0 .416-.162.832-.485 1.145z"/>
+                  </svg>
+                </Link>
+              </li>
+              */}
               <li>
                 <a title="Follow me on Twitter" href="https://twitter.com/anson_kao">
                   <svg className="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
@@ -93,6 +157,7 @@ class Home extends React.Component {
             </ul>
           </section>
           <hr/>
+          {/*
           <section className="section">
             <h2>#coolstuff</h2>
             <ul className="cool-stuff-links">
@@ -116,8 +181,9 @@ class Home extends React.Component {
             </ul>
           </section>
           <hr/>
+          */}
           <footer className="footer">
-            Last updated on April 10th, 2019
+            Last updated on November 10th, 2019
           </footer>
         </main>
       </div>

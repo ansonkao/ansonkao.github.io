@@ -13,15 +13,15 @@ class BlogIndex extends React.Component {
     return (
       <Layout location={this.props.location} title={siteTitle}>
         <SEO
-          title="📚 All posts"
+          title="All posts"
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}
         />
 
         <article className="article">
           <header className="article-header">
-            <h1 className="article-title">📚 All Posts</h1>
+            <h1 className="article-title"><span role="img" aria-label="icon">📚</span> All Posts</h1>
           </header>
-        
+
           <div className="article-content">
 
             {posts.map(({ node }) => {
@@ -29,7 +29,7 @@ class BlogIndex extends React.Component {
               return (
                 <div key={node.fields.slug}>
                   <h3 className="article-preview-title-link">
-                    <span style={{ "textDecoration": "none" }}>📝 </span>
+                    <span role="img" aria-label="icon" style={{ "textDecoration": "none" }}>{node.frontmatter.emoji || "📝"} </span>
                     <Link to={node.fields.slug}>
                       {title}
                     </Link>
@@ -74,6 +74,7 @@ export const pageQuery = graphql`
           frontmatter {
             date(formatString: "MMMM DD, YYYY")
             title
+            emoji
             description
           }
         }

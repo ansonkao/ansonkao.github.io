@@ -26,7 +26,11 @@ class BlogPostTemplate extends React.Component {
 
         <article className="article">
           <header className="article-header">
-            <h1 className="article-title">{post.frontmatter.title}</h1>
+            <h1 className="article-title">
+              {post.frontmatter.emoji || "📝"}
+              {" "}
+              {post.frontmatter.title}
+            </h1>
             <h2 className="article-byline">
               {"🗓 "}
               <time className="article-time">{post.frontmatter.date}</time>
@@ -84,6 +88,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
+        emoji
         description
       }
     }

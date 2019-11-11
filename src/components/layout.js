@@ -6,23 +6,60 @@ import AnsonPic from "../../content/assets/ansonkao.png"
 import  "./layout.less"
 
 class Layout extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      expanded: false,
+    };
+  }
+
+  onToggle = () => {
+    this.setState({
+      expanded: !this.state.expanded,
+    });
+  }
+
   render() {
+    const expanded = this.state.expanded;
+
     return (
       <div className="global-ansonkao global-ansonkao-layout">
         <Helmet>
           <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,600" rel="stylesheet" />
         </Helmet>
 
-        <aside className="sidebar">
-          <header className="sidebar-header">
+        <aside className={"menu" + (expanded ? " menu--expanded" : "")}>
+          <header className="menu-header">
             <Link to="/">
               <img src={AnsonPic} alt="Anson Kao" />
               <h1>Anson Kao</h1>
               <h2>Entrepreneur, Engineer, Creator</h2>
               <h3><span role="img" aria-label="Location">📍</span> Toronto, Canada <span role="img" aria-label="Canada">🇨🇦</span></h3>
             </Link>
+            <div className="menu-click-mask">
+              <button className={"menu-toggle" + (expanded ? " menu-toggle--expanded" : "")} type="button" onClick={this.onToggle}>
+                { expanded ?
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#FFFFFF">
+                  <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>
+                </svg>
+                :
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#FFFFFF">
+                  <path d="M6 12c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm9 0c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/>
+                </svg>
+                }
+              </button>            
+            </div>
           </header>
-          <ul className="social-links">
+          <ul className={"social-links" + (expanded ? " social-links--expanded" : "")}>
+            <li>
+              <Link to="/blog" title="Read my blog">
+                <svg className="social-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-.994 9.095l2.974-2.884c.144-.14.331-.211.516-.211.188 0 .375.073.518.22l-4.032 3.911c-.283-.294-.268-.752.024-1.036zm-4.49 8.819c-.06.057-.136.086-.212.086-.168 0-.304-.137-.304-.304 0-.079.031-.159.093-.218l.5-.485.422.436-.499.485zm4.034-2.386c-.919.891-1.796 1.333-3.013 1.728l-.754-.779c.433-1.205.901-2.067 1.819-2.958l1.71-1.657 1.946 2.009-1.708 1.657zm6.965-6.483l-4.402 4.269-2.218-2.29 4.402-4.27c1.016-.984 2.703-.246 2.703 1.146 0 .416-.162.832-.485 1.145z"/>
+                </svg>
+                Blog
+              </Link>
+            </li>
             <li>
               <a title="Follow me on Twitter" href="https://twitter.com/anson_kao">
                 <svg className="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">

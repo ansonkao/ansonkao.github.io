@@ -2,15 +2,17 @@
 title: Why does music sound so good?
 date: "2014-07-07T22:12:03.284Z"
 path: "/why-does-music-sound-good"
+emoji: 🔊
+description: "What better way to kick off my blog than with one of the most elusive questions of all... Why does music sound so good?"
 ---
 
 What better way to kick off my blog than with one of the most elusive questions of all…
 
-> _Why does music sound so good?_
+> # *Why does music sound so good?*
 
 Think about it. We know why food tastes good — we need nutrients to live. We know why sex feels good — we have to make babies to procreate. But why does music sound good? It doesn’t seem to contribute to any of nature’s goals whatsoever.
 
-![Artists rendering of the origin story of music](./origin-of-music.jpg)
+![Artists rendering of the origin story of music](https://cdn-images-1.medium.com/max/2000/0*3rR3KXM6MFfNLdfg.jpg)
 
 Even other art forms seem to relate closely with nature. For example, visual art often portrays real scenery and objects in our lives. The aggressive stance designed into sports cars derive their appeal from their resemblance to predatory animals. Even with dance, we can see the similarities with schools of fish moving in perfect synchronicity and the flapping wings of a bird through the skies. But nowhere in nature, not even in the singing of the birds and the chirping of insects, can we find the same musical harmonies and melodies that humans have created with music.
 

@@ -12,6 +12,7 @@ Deploy using this command:
 ```
 $ npm run deploy
 ```
+Go to https://github.com/ansonkao/ansonkao.github.io/settings and reset the custom domain to https://www.ansonkao.com
 
 
 ## Scraping from Medium

@@ -52,6 +52,8 @@
         top: 30px;
         right: 30px;
         color: #FFF;
+        border: none;
+        background: none;
     }
     .social-links {
         display: block;
@@ -94,20 +96,81 @@
         padding: 20px 0;
     }
 
-    .article-title  { font-size: 27px; font-weight: 600; margin-bottom: 10px; }
-    .article-byline { font-size: 13px; font-weight: 300; margin-bottom: 25px; }
-    .article-time   { opacity: 0.64; padding-right: 10px; }
-    .article-author { opacity: 0.64; };
+    .article-title   { font-size: 27px; font-weight: 600; margin-bottom: 10px; }
+    .article-byline  { font-size: 13px; font-weight: 300; margin-bottom: 25px; }
+    .article-time    { color: #BBB; margin-right: 10px; }
+    .article-author  { color: #BBB; display: none; };
+    .article-reading { color: #BBB; margin-left: 10px; }
+    .article-list {
+        border-top: 1px solid fade(#FFF, 50%);
+        .article-preview-title-link {
+            margin-top: 35px;
+            > a {
+                text-decoration: underline;
+            }
+        }
+    }
     .article-content {
         border-top: 1px solid fade(#FFF, 50%);
         padding-top: 25px;
+
+        h2 { font-size: 32px; font-weight: 600; margin: 50px 0 15px; }
+        h3 { font-size: 22px; font-weight: 600; margin: 35px 0 15px; }
+
+        figure {
+            text-align: center;
+            margin-bottom: 5px;
+
+            &:not(:first-child) {
+                margin-top: 35px;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 35px;
+            }
+
+            img {
+                max-width: 100%;
+                max-height: 400px;
+                opacity: 0.87;
+                transition: 0.25s opacity;
+
+                &:hover {
+                    opacity: 1.0;
+                }
+            }
+
+            figcaption {
+                margin-top: 5px;
+                font-size: 14px;
+                color: #c9d0da;
+            }
+        }
+
         p {
             font-size: 16px;
             padding-bottom: 20px;
             line-height: 24px;
+            
+            &:empty {
+                display: none;
+            }
         }
+
         a {
             text-decoration: underline;
+        }
+
+        hr {
+            border: none;
+            margin-bottom: 35px;
+            &::before {
+                content: "...";
+                letter-spacing: 20px;
+                display: block;
+                text-align: center;
+                font-weight: bold;
+            }
         }
     }
     .article-pagination {
@@ -125,6 +188,10 @@
         margin: 5px 0 15px;
     }
 
+    #disqus_thread {
+        margin-top: 50px;
+    }
+
     .footer {
         width: 87%;
         min-width: 300px;
@@ -132,6 +199,7 @@
         font-size: 12px;
         opacity: 0.64;
         text-align: center;
+        line-height: 20px;
     }
 
 }
@@ -164,11 +232,16 @@
             transition: opacity 0.125s;
             &:hover { opacity: 0.64; }
 
+            a:hover {
+                opacity: 1.0;
+            }
+
             img {
                 width: 80px;
                 box-shadow:
                     0 0 10px 0 fade(#000, 50%),
                     0 0 40px 0 fade(#246, 50%);
+                opacity: 1.0 !important;
             }
     
             h1 { font-size: 27px; text-align: left; font-weight: 600; margin: 0; }
@@ -211,18 +284,18 @@
     
         .article {
             width: 80%;
-            max-width: 800px;
+            max-width: 700px;
             margin: auto;
         }
             
         .article-title  { font-size: 50px; margin-bottom: 10px; }
         .article-byline { font-size: 16px; margin-bottom: 30px; }
-        .article-time   { opacity: 0.64; padding-right: 15px; }
-        .article-author { opacity: 0.64; };
+        .article-time   { padding-right: 10px; }
+        .article-author { padding-right: 10px; display: inline; };
         .article-content {
             padding-top: 30px;
             p {
-                font-size: 20px;
+                font-size: 18px;
                 padding-bottom: 10px;
                 line-height: 30px;
             }
@@ -251,7 +324,11 @@
             padding: 20px 0;
             margin: 0 auto;
             text-align: left;
+            line-height: 25px;
         }    
+        .footer-bottom {
+            margin-left: 20px;
+        }
 
     }
 

@@ -15,6 +15,7 @@ class BlogPostTemplate extends React.Component {
       "identifier": post.id,
       "title": post.frontmatter.title,
     }
+    // const readingTime = post.frontmatter.readingTime || 2
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
@@ -34,10 +35,15 @@ class BlogPostTemplate extends React.Component {
             <h2 className="article-byline">
               {"🗓 "}
               <time className="article-time">{post.frontmatter.date}</time>
-              {"  👨‍💻 "}
               <Link to="/" className="article-author">
+                {"  👨‍💻 "}
                 Anson Kao
               </Link>
+              {/* <span className="article-reading">
+                {"  ⏱ "}
+                { readingTime }
+                { " min read" }
+              </span> */}
             </h2>
           </header>
         

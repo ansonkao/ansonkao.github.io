@@ -12,8 +12,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/posts`,
-        name: `posts`,
+        path: `${__dirname}/content`,
+        name: `content`,
       },
     },
     {
@@ -39,9 +39,14 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.0725rem`,
             },
           },
+          `gatsby-remark-reading-time`,
           `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
+          {
+            resolve: `gatsby-remark-figure-caption`,
+            options: {figureClassName: 'md-figure'},
+          },
         ],
       },
     },

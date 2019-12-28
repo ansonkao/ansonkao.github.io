@@ -22,7 +22,7 @@ class BlogIndex extends React.Component {
             <h1 className="article-title"><span role="img" aria-label="icon">📚</span> All Posts</h1>
           </header>
 
-          <div className="article-content">
+          <div className="article-list">
 
             {posts.map(({ node }) => {
               const title = node.frontmatter.title || node.fields.slug

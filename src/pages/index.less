@@ -36,6 +36,7 @@ html, body {
         font-weight: 300;
         color: #FFF;
         text-shadow: 0 2px 10px fade(#000, 40%);
+        word-break: break-word;
     }
 
     a {
@@ -50,15 +51,42 @@ html, body {
         display: block;
     }
 
-    ol, ul {
-        list-style: none;
-        font-size: 14px;
-        margin: 10px 20px;
-        line-height: 20px;
+    em {
+        font-style: italic;
     }
 
-    em {
+    strong {
         font-weight: bold;
+    }
+
+    ol, ul {
+        font-size: 18px;
+        line-height: 30px;
+        margin: 25px 25px;
+    }
+
+    blockquote {
+        * {
+            font-family: serif, 'Times New Roman', Times;
+            color: #c9d0da;
+            strong,
+            em {
+                color: #FFF;
+            }
+        }
+        font-size: 24px;
+        line-height: 36px;
+        margin-bottom: 35px;
+        margin-right: 25px;
+        margin-left: 25px;
+        padding-left: 25px;
+        border-left: 2px solid #FFF;
+    }
+
+    .gatsby-resp-iframe-wrapper {
+        + p {
+            margin-top: 35px;
+        }
     }
 
     p { margin-bottom: 10px; }
@@ -80,6 +108,12 @@ html, body {
         width: 100px;
         margin: 50px auto;
         box-shadow: 0 1px 5px 0 fade(#000, 100%);
+    }
+    ol, ul {
+        list-style: none;
+        font-size: 14px;
+        margin: 10px 20px;
+        line-height: 20px;
     }
 
     .main {
@@ -144,6 +178,10 @@ html, body {
         text-align: center;
         font-size: 12px;
         color: #DDD;
+        line-height: 25px;
+    }
+    .footer-bottom {
+        color: #DDD;
     }
 
 }
@@ -154,11 +192,6 @@ html, body {
 @media (min-width:960px) {
 
     .global-ansonkao {
-        ol, ul {
-            font-size: 18px;
-            line-height: 30px;
-            margin: 25px 25px;
-        }
         p { margin-bottom: 25px; }
     }
 

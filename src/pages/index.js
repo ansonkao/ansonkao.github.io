@@ -2,6 +2,7 @@ import React from "react"
 import Helmet from "react-helmet"
 import { Link } from "gatsby"
 
+import Footer from "../components/footer"
 import SEO from "../components/seo"
 import AnsonPic from "../../content/assets/ansonkao.png"
 import "./index.less"
@@ -22,11 +23,19 @@ class Home extends React.Component {
                 "blog",
                 "Anson",
                 "Anson Kao",
+                "film",
+                "video",
+                "production",
+                "vfx",
                 "music",
                 "technology",
-                "startups",
                 "javascript",
-                "react"
+                "react",
+                "startups",
+                "entrepreneurship",
+                "business",
+                "life",
+                "philosophy",
             ]}
           />
 
@@ -38,7 +47,7 @@ class Home extends React.Component {
           </header>
           <section className="section">
             <p>
-              <em>Hi! My name is Anson, and I'm based out of Toronto.</em>&nbsp;
+              <strong>Hi! My name is Anson, and I'm based out of Toronto.</strong>&nbsp;
               I'm an entrepreneur with a decade-long background in technology, startups,
               and more recently: film. I love bringing people together to
               create the future.
@@ -54,7 +63,7 @@ class Home extends React.Component {
               I can run small teams, advise on strategy/architecture,
               and write ReactJS code at a level few others in Toronto can.
               Some startups hire me for these reasons on a contract basis,
-              and you can too (<a href="#connect">contact me</a>).
+              and you can too (<a href="#connect">connect with me</a>).
               I studied Mechatronics Engineering at the University of Waterloo, and
               I feel very at home in a machine shop, at the drawing board, at the computer,
               as well as on the phone.
@@ -65,9 +74,9 @@ class Home extends React.Component {
             <p>
               While I've always been good at technology,
               I find that my highest calling is not technology itself,
-              but in using technology to give people emotionally charged experiences.
+              but in using technology to capture people's imaginations.
               Towards that end, what could be better medium than film?
-              &nbsp;<em>I believe film is the ultimate art form.</em>
+              &nbsp;<strong>I believe film is the ultimate art form.</strong>
             </p>
             <p>
               Over the past 18 months, I have indulged in a selection of creative film projects.
@@ -78,7 +87,7 @@ class Home extends React.Component {
             </p>
             {/*             
             <p>
-              &nbsp;<em>Film is the ultimate form of creative expression</em>, in my opinion.
+              &nbsp;<strong>Film is the ultimate form of creative expression</strong>, in my opinion.
               It combines all other art forms, e.g. photography, acting,
               musical composition and performance, poetry, dance, fashion, etc.
               It is fully immersive - the director takes you into their world and you get lost in it.
@@ -103,7 +112,6 @@ class Home extends React.Component {
           <section className="section">
             <h4>Connect with me:</h4>
             <ul className="social-links">
-              {/*
               <li>
                 <Link to="/blog" title="Read my blog">
                   <svg className="social-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -111,7 +119,6 @@ class Home extends React.Component {
                   </svg>
                 </Link>
               </li>
-              */}
               <li>
                 <a title="Follow me on Twitter" href="https://twitter.com/anson_kao">
                   <svg className="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
@@ -182,9 +189,7 @@ class Home extends React.Component {
           </section>
           <hr/>
           */}
-          <footer className="footer">
-            Last updated on November 10th, 2019
-          </footer>
+          <Footer />
         </main>
       </div>
     )

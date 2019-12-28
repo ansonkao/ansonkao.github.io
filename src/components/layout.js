@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import Helmet from "react-helmet"
 import { Link } from "gatsby"
 
+import Footer from "../components/footer"
 import AnsonPic from "../../content/assets/ansonkao.png"
 import  "./layout.less"
 
@@ -115,10 +116,7 @@ class Layout extends Component {
           {this.props.children}
         </main>
 
-        <footer className="footer">
-          © {new Date().getFullYear()} Anson Kao. Built with{` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
+        <Footer />
       </div>
     )
   }

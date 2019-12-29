@@ -12,7 +12,7 @@ Deploy using this command:
 ```
 $ npm run deploy
 ```
-Go to https://github.com/ansonkao/ansonkao.github.io/settings and reset the custom domain to https://www.ansonkao.com
+If the domain gets messed up, go to https://github.com/ansonkao/ansonkao.github.io/settings and reset the custom domain to https://www.ansonkao.com. See https://github.com/tschaub/gh-pages/issues/236 for more details.
 
 
 ## Scraping from Medium

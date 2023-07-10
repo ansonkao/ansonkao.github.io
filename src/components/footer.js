@@ -6,8 +6,8 @@ class Footer extends React.Component {
       <footer className="footer">
         © {new Date().getFullYear()} Anson Kao. Built with{` `}
         <a href="https://www.gatsbyjs.org">Gatsby</a>
-        <br/>
-        <div className="footer-bottom">Last updated Dec 28th, 2019</div>
+        <br />
+        <div className="footer-bottom">Last updated July 9th, 2023</div>
       </footer>
     )
   }
